@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚠️ PERINGATAN — IKROM WALIDAINI | DOMINASI MAYA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --hijau: #00ff41;
+            --hijaugelap: #009926;
+            --hijaupudar: rgba(0, 255, 65, 0.15);
+            --emas: #ffd700;
+            --emaspudar: rgba(255, 215, 0, 0.15);
+            --biru: #00d9ff;
+            --merah: #ff2a2a;
+            --putih: #e6e6e6;
+            --abu: #778899;
+            --hitam: #000000;
+            --latar: #000502;
+            --panel: rgba(0, 12, 4, 0.9);
+            --batas-hijau: rgba(0, 255, 65, 0.5);
+        }
+
+        body {
+            background: var(--latar);
+            color: var(--putih);
+            font-family: 'Fira Code', monospace;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* === LAPISAN 1: Hujan Kode === */
+        .code-rain {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .rain-col {
+            position: absolute;
+            top: -100%;
+            font-size: 14px;
+            color: rgba(0, 255, 65, 0.6);
+            text-shadow: 0 0 4px var(--hijau);
+            animation: jatuh linear infinite;
+        }
+        @keyframes jatuh {
+            0% {transform:translateY(0); opacity:0;}
+            10% {opacity:0.8;}
+            90% {opacity:0.8;}
+            100% {transform:translateY(200vh); opacity:0;}
+        }
+
+        /* === LAPISAN 2: Jaringan Kotak Bergerak === */
+        .grid-bg {
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(0, 255, 65, 0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 65, 0.08) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridGerak 30s linear infinite;
+            z-index: 2;
+            pointer-events: none;
+        }
+        @keyframes gridGerak {
+            0% {transform:translateY(0);}
+            100% {transform:translateY(50px);}
+        }
+
+        /* === LAPISAN 3: Garis Pindai === */
+        .scan-h, .scan-h2, .scan-v {
+            position: fixed;
+            pointer-events: none;
+            z-index: 3;
+        }
+        .scan-h {
+            top: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--hijau), transparent);
+            box-shadow: 0 0 10px var(--hijau), 0 0 20px var(--hijau);
+            animation: pindaiH 2.5s linear infinite;
+        }
+        .scan-h2 {
+            top: 0; left: 0; width: 100%; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--emas), transparent);
+            animation: pindaiH 4s linear infinite reverse;
+        }
+        .scan-v {
+            left: 0; top: 0; width: 1px; height: 100%;
+            background: linear-gradient(180deg, transparent, var(--biru), transparent);
+            animation: pindaiV 5s linear infinite;
+        }
+        @keyframes pindaiH {
+            0% {top: 0;}
+            100% {top: 100%;}
+        }
+        @keyframes pindaiV {
+            0% {left: 0;}
+            100% {left: 100%;}
+        }
+
+        /* === LAPISAN 4: Gangguan Layar & Distorsi === */
+        .glitch-overlay {
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(
+                transparent,
+                rgba(0, 255, 65, 0.02) 1px,
+                transparent 2px
+            );
+            z-index: 4;
+            pointer-events: none;
+            animation: garisPindai 0.1s infinite;
+        }
+        @keyframes garisPindai {
+            0% {transform: translateY(0);}
+            100% {transform: translateY(2px);}
+        }
+
+        /* === Wadah Utama === */
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 950px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* === Bingkai Terminal Utama === */
+        .terminal {
+            background: var(--panel);
+            border: 2px solid var(--batas-hijau);
+            border-radius: 12px;
+            padding: 0;
+            box-shadow: 
+                0 0 30px rgba(0, 255, 65, 0.2),
+                inset 0 0 60px rgba(0, 0, 0, 0.8),
+                0 0 60px rgba(0, 255, 65, 0.1);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        .terminal-header {
+            background: rgba(0, 255, 65, 0.08);
+            padding: 12px 20px;
+            border-bottom: 1px solid var(--batas-hijau);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .terminal-dots {
+            display: flex;
+            gap: 8px;
+        }
+        .dot {
+            width: 12px; height: 12px; border-radius: 50%;
+        }
+        .dot-r { background: var(--merah); box-shadow: 0 0 8px var(--merah); }
+        .dot-y { background: var(--emas); box-shadow: 0 0 8px var(--emas); animation: kedip 1.5s infinite; }
+        .dot-g { background: var(--hijau); box-shadow: 0 0 8px var(--hijau); animation: kedip 1.5s infinite 0.5s; }
+        @keyframes kedip {
+            0%,100% {opacity:1;}
+            50% {opacity:0.4;}
+        }
+        .terminal-title {
+            font-size: 0.8rem;
+            color: var(--hijau);
+            letter-spacing: 2px;
+        }
+        .terminal-body {
+            padding: 30px;
+        }
+
+        /* === Blink Kursor === */
+        .blink {
+            display: inline-block;
+            width: 10px;
+            height: 18px;
+            background: var(--hijau);
+            animation: kedipKursor 0.8s infinite;
+            vertical-align: middle;
+            margin-left: 5px;
+        }
+        @keyframes kedipKursor {
+            0%,100% {opacity:1;}
+            50% {opacity:0;}
+        }
+
+        /* === Judul Besar === */
+        .hero {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .status-bar {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 42, 42, 0.1);
+            border: 1px solid var(--merah);
+            padding: 8px 20px;
+            margin-bottom: 25px;
+            animation: denyarMerah 2s infinite;
+        }
+        @keyframes denyarMerah {
+            0%,100% {box-shadow: 0 0 10px rgba(255, 42, 42, 0.3);}
+            50% {box-shadow: 0 0 25px rgba(255, 42, 42, 0.6), inset 0 0 10px rgba(255, 42, 42, 0.2);}
+        }
+        .status-dot {
+            width: 10px; height: 10px;
+            background: var(--merah);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--merah);
+            animation: kedipCepat 1s infinite;
+        }
+        @keyframes kedipCepat {
+            0%,100% {transform:scale(1);}
+            50% {transform:scale(0.6);}
+        }
+        .status-text {
+            color: var(--merah);
+            font-weight: 700;
+            letter-spacing: 3px;
+            font-size: 0.9rem;
+        }
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2rem, 7vw, 3.5rem);
+            font-weight: 900;
+            background: linear-gradient(90deg, var(--merah), var(--emas), var(--hijau), var(--biru), #cc00ff, var(--merah));
+            background-size: 600% 100%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: judulAlir 4s linear infinite;
+            letter-spacing: 6px;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 0 15px rgba(0, 255, 65, 0.3));
+        }
+        @keyframes judulAlir {
+            0% {background-position:0 0;}
+            100% {background-position:600% 0;}
+        }
+        .sub-judul {
+            font-size: 1.1rem;
+            color: var(--emas);
+            letter-spacing: 4px;
+            text-shadow: 0 0 10px var(--emas);
+        }
+
+        /* === Garis Pemisah === */
+        .garis {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--hijau), transparent);
+            margin: 30px 0;
+            position: relative;
+        }
+        .garis::after {
+            content: '═══ ⚠️ ═══';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--latar);
+            padding: 0 15px;
+            color: var(--emas);
+        }
+
+        /* === Efek Mengetik === */
+        .section-ketik {
+            margin: 35px 0;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .section-ketik.aktif {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .pesan-ketik {
+            font-size: 1.15rem;
+            line-height: 2;
+            padding-left: 25px;
+            border-left: 2px solid;
+            margin-bottom: 10px;
+            min-height: 2.2em;
+        }
+        .p-merah { border-color: var(--merah); color: #ff8888; }
+        .p-kuning { border-color: var(--emas); color: #ffdd66; }
+        .p-hijau { border-color: var(--hijau); color: #88ffaa; }
+        .p-biru { border-color: var(--biru); color: #88ddff; }
+        .kursor-ketik {
+            display: inline-block;
+            width: 8px;
+            height: 1.2em;
+            background: currentColor;
+            animation: kedipKursor 0.7s infinite;
+            vertical-align: text-bottom;
+            margin-left: 2px;
+        }
+
+        /* === Bagian Setelah Mengetik === */
+        .section-tetap {
+            margin: 35px 0;
+        }
+        .sec-title {
+            font-size: 0.9rem;
+            color: var(--emas);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .sec-title::before {
+            content: '▶';
+            color: var(--hijau);
+            text-shadow: 0 0 5px var(--hijau);
+        }
+        .pesan {
+            font-size: 1.15rem;
+            line-height: 2;
+            padding-left: 25px;
+            border-left: 2px solid;
+            margin-bottom: 10px;
+        }
+        .p-putih { border-color: var(--putih); color: #ffffff; font-weight: 600; }
+
+        /* === PANEL SISTEM KEAMANAN === */
+        .keamanan-panel {
+            background: rgba(0, 20, 40, 0.6);
+            border: 2px solid rgba(0, 217, 255, 0.35);
+            border-radius: 10px;
+            padding: 25px;
+            margin: 25px 0;
+            box-shadow: 
+                0 0 25px rgba(0, 217, 255, 0.15),
+                inset 0 0 30px rgba(0, 0, 0, 0.5);
+        }
+        .keamanan-judul {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(0, 217, 255, 0.2);
+        }
+        .keamanan-label {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            color: var(--biru);
+            letter-spacing: 3px;
+            text-shadow: 0 0 8px var(--biru);
+        }
+        .keamanan-status-utama {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--hijau);
+            font-size: 0.85rem;
+        }
+        .keamanan-dot {
+            width: 10px; height: 10px;
+            background: var(--hijau);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--hijau);
+            animation: kedipCepat 1s infinite;
+        }
+        .keamanan-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 18px;
+        }
+        .keamanan-item {
+            background: rgba(0, 255, 65, 0.04);
+            border: 1px solid rgba(0, 255, 65, 0.15);
+            border-radius: 6px;
+            padding: 15px;
+            transition: all 0.3s;
+        }
+        .keamanan-item:hover {
+            border-color: var(--emas);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.15);
+        }
+        .keamanan-nama {
+            font-size: 0.8rem;
+            color: var(--abu);
+            margin-bottom: 8px;
+        }
+        .keamanan-nilai {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--hijau);
+            margin-bottom: 8px;
+        }
+        .keamanan-bar {
+            height: 6px;
+            background: #0a1a0f;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        .keamanan-bar-isi {
+            height: 100%;
+            border-radius: 3px;
+            background: linear-gradient(90deg, var(--hijaugelap), var(--hijau), var(--emas));
+            background-size: 200% 100%;
+            animation: barAlir 2.5s linear infinite;
+        }
+        @keyframes barAlir {
+            0% {background-position:0 0;}
+            100% {background-position:200% 0;}
+        }
+        .keamanan-log {
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 255, 65, 0.1);
+            border-radius: 6px;
+            padding: 15px;
+            font-size: 0.75rem;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+        .keamanan-log-baris {
+            margin: 5px 0;
+            opacity: 0;
+            animation: munculLog 0.5s ease-out forwards;
+        }
+        @keyframes munculLog {
+            to {opacity: 1;}
+        }
+        .log-waktu { color: #558877; }
+        .log-ok { color: var(--hijau); }
+        .log-info { color: var(--biru); }
+
+        /* === Panel Statistik === */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+        .stat-card {
+            background: rgba(0, 255, 65, 0.05);
+            border: 1px solid rgba(0, 255, 65, 0.25);
+            border-radius: 8px;
+            padding: 18px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .stat-card:hover {
+            border-color: var(--emas);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+            transform: translateY(-3px);
+        }
+        .stat-angka {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--hijau);
+            text-shadow: 0 0 8px var(--hijau);
+            font-family: 'Orbitron', sans-serif;
+        }
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--abu);
+            margin-top: 5px;
+            letter-spacing: 1px;
+        }
+
+        /* === Blok Kode Contoh === */
+        .code-block {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(0, 255, 65, 0.2);
+            border-radius: 6px;
+            padding: 20px;
+            margin: 20px 0;
+            font-size: 0.85rem;
+            overflow-x: auto;
+        }
+        .komen { color: #667788; }
+        .kunci { color: #ff77cc; }
+        .nilai { color: #ffdd66; }
+        .string { color: #88ffaa; }
+
+        /* === Penutup Utama === */
+        .penutup {
+            text-align: center;
+            margin-top: 40px;
+            padding: 30px;
+            border: 2px solid var(--emas);
+            background: rgba(255, 215, 0, 0.05);
+            border-radius: 10px;
+            animation: emasNyal 2.5s ease-in-out infinite alternate;
+        }
+        @keyframes emasNyal {
+            0% {box-shadow: 0 0 20px rgba(255, 215, 0, 0.1);}
+            100% {box-shadow: 0 0 45px rgba(255, 215, 0, 0.35);}
+        }
+        .kalimat-inti {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--emas);
+            letter-spacing: 4px;
+            text-shadow: 0 0 15px var(--emas);
+            line-height: 1.8;
+        }
+        .tanda-tangan {
+            margin-top: 20px;
+            font-size: 1.1rem;
+            color: var(--hijau);
+        }
+
+        /* === Footer === */
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(0, 255, 65, 0.15);
+            font-size: 0.7rem;
+            color: var(--abu);
+        }
+        .footer-ip {
+            margin-top: 8px;
+            color: var(--hijaugelap);
+            font-family: 'Fira Code', monospace;
+        }
+
+        /* === Tombol Suara === */
+        .tombol-suara {
+            background: rgba(255, 42, 42, 0.15);
+            border: 1px solid var(--merah);
+            color: var(--merah);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+        }
+        .tombol-suara:hover {
+            background: rgba(255, 42, 42, 0.3);
+            box-shadow: 0 0 15px rgba(255, 42, 42, 0.4);
+        }
+
+        /* Responsif */
+        @media (max-width: 600px) {
+            .terminal-body { padding: 20px 15px; }
+            .pesan-ketik { font-size: 1rem; padding-left: 15px; }
+            .kalimat-inti { font-size: 1.1rem; }
+            .keamanan-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hujan Kode -->
+    <div class="code-rain" id="hujanKode"></div>
+    
+    <!-- Latar Jaringan -->
+    <div class="grid-bg"></div>
+    
+    <!-- Garis Pindai -->
+    <div class="scan-h"></div>
+    <div class="scan-h2"></div>
+    <div class="scan-v"></div>
+    
+    <!-- Gangguan Layar -->
+    <div class="glitch-overlay"></div>
+
+    <div class="container">
+        <div class="terminal">
+            <div class="terminal-header">
+                <div class="terminal-dots">
+                    <div class="dot dot-r"></div>
+                    <div class="dot dot-y"></div>
+                    <div class="dot dot-g"></div>
+                </div>
+                <span class="terminal-title">root@ikrom-walidaini:~# ./peringatan_utama.sh</span>
+                <div style="width:60px;"></div>
+            </div>
+            
+            <div class="terminal-body">
+                <!-- Tombol Suara -->
+                <button class="tombol-suara" id="tombolSuara">🔊 KLIK UNTUK AKTIFKAN ALARM</button>
+
+                <!-- Bagian Judul -->
+                <div class="hero">
+                    <div class="status-bar">
+                        <div class="status-dot"></div>
+                        <span class="status-text">PERINGATAN RESMI — TINGKAT: TERTINGGI</span>
+                    </div>
+                    <h1>IKROM WALIDAINI</h1>
+                    <p class="sub-judul">PENGUASA · DUNIA MAYA · TAK TERBATAS</p>
+                </div>
+
+                <!-- Bagian 01 — Mengetik -->
+                <div class="section-ketik" id="bagian1">
+                    <p class="sec-title">BAGIAN 01 — PERINGATAN AWAL</p>
+                    <p class="pesan-ketik p-merah" id="teks1-1"></p>
+                    <p class="pesan-ketik p-merah" id="teks1-2"></p>
+                </div>
+
+                <div class="garis"></div>
+
+                <!-- Bagian 02 — Mengetik -->
+                <div class="section-ketik" id="bagian2">
+                    <p class="sec-title">BAGIAN 02 — KEMAMPUANKU</p>
+                    <p class="pesan-ketik p-kuning" id="teks2-1"></p>
+                    <p class="pesan-ketik p-kuning" id="teks2-2"></p>
+                    
+                    <div class="stat-grid">
+                        <div class="stat-card">
+                            <div class="stat-angka">∞</div>
+                            <div class="stat-label">Jangkauan</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-angka">0.01s</div>
+                            <div class="stat-label">Waktu Eksekusi</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-angka">24/7</div>
+                            <div class="stat-label">Selalu Memantau</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-angka">100%</div>
+                            <div class="stat-label">Tidak Terdeteksi</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="garis"></div>
+
+                <!-- Bagian 03 — Mengetik -->
+                <div class="section-ketik" id="bagian3">
+                    <p class="sec-title">BAGIAN 03 — JALAN KELUAR TERBAIK</p>
+                    <p class="pesan-ketik p-hijau" id="teks3-1"></p>
+                    <p class="pesan-ketik p-hijau" id="teks3-2"></p>
+                    <p class="pesan-ketik p-hijau" id="teks3-3"></p>
+                </div>
+
+                <div class="garis"></div>
+
+                <!-- Bagian 04 — Mengetik -->
+                <div class="section-ketik" id="bagian4">
+                    <p class="sec-title">BAGIAN 04 — KEKUASAAN TANPA BATAS</p>
+                    <p class="pesan-ketik p-biru" id="teks4-1"></p>
+                    <p class="pesan-ketik p-biru" id="teks4-2"></p>
+                    <p class="pesan-ketik p-biru" id="teks4-3"></p>
+                </div>
+
+                <div class="garis"></div>
+
+                <!-- Bagian 05 — Tetap Tampil -->
+                <div class="section-tetap">
+                    <p class="sec-title">BAGIAN 05 — FAKTA TEKNIS</p>
+                    <div class="code-block">
+                        <span class="komen">// Tidak ada sistem yang benar-benar aman dari IKROM WALIDAINI</span><br>
+                        <span class="kunci">const</span> penguasa = <span class="string">"IKROM WALIDAINI"</span>;<br>
+                        <span class="kunci">const</span> jangkauan = <span class="nilai">Infinity</span>;<br>
+                        <span class="kunci">const</span> status = <span class="string">"SELALU TERHUBUNG"</span>;<br><br>
+                        <span class="kunci">function</span> <span class="nilai">adaDimanaSaja</span>(lokasi) {<br>
+                        &nbsp;&nbsp;<span class="kunci">return</span> lokasi.<span class="nilai">adaInternet</span> ? penguasa : <span class="string">"tetap ada"</span>;<br>
+                        }<br><br>
+                        <span class="komen">// Di mana ada internet, di situlah aku.</span>
+                    </div>
+                </div>
+
+                <div class="garis"></div>
+
+                <!-- PANEL SISTEM KEAMANAN -->
+                <div class="section-tetap">
+                    <p class="sec-title">BAGIAN 05-1 — PANEL SISTEM KEAMANAN</p>
+                    
+                    <div class="keamanan-panel">
+                        <div class="keamanan-judul">
+                            <span class="keamanan-label">🔒 SISTEM KEAMANAN IKROM WALIDAINI</span>
+                            <span class="keamanan-status-utama">
+                                <span class="keamanan-dot"></span>
+                                SEMUA SISTEM AKTIF & TERKUNCI
+                            </span>
+                        </div>
+                        
+                        <div class="keamanan-grid">
+                            <div class="keamanan-item">
+                                <div class="keamanan-nama">Perlindungan Identitas</div>
+                                <div class="keamanan-nilai">Tingkat: MAKSIMAL</div>
+                                <div class="keamanan-bar"><div class="keamanan-bar-isi" style="width:100%"></div></div>
+                            </div>
+                            <div class="keamanan-item">
+                                <div class="keamanan-nama">Enkripsi Data</div>
+                                <div class="keamanan-nilai">Algoritma: TAK TERBACA</div>
+                                <div class="keamanan-bar"><div class="keamanan-bar-isi" style="width:100%"></div></div>
+                            </div>
+                            <div class="keamanan-item">
+                                <div class="keamanan-nama">Pemantauan Jaringan</div>
+                                <div class="keamanan-nilai">Cakupan: SELURUH DUNIA</div>
+                                <div class="keamanan-bar"><div class="keamanan-bar-isi" style="width:100%"></div></div>
+                            </div>
+                            <div class="keamanan-item">
+                                <div class="keamanan-nama">Deteksi Ancaman</div>
+                                <div class="keamanan-nilai">Waktu: 0.001 DETIK</div>
+                                <div class="keamanan-bar"><div class="keamanan-bar-isi" style="width:100%"></div></div>
+                            </div>
+                            <div class="keamanan-item">
+                                <div class="keamanan-nama">Akses Sistem</div>
+                                <div class="keamanan-nilai">HANYA: IKROM WALIDAINI</div>
+                                <div class="keamanan-bar"><div class="keamanan-bar-isi" style="width:100%"></div></div>
+                            </div>
+                            <div class="keamanan-item">
+                                <div class="keamanan-nama">Pencegahan Serangan</div>
+                                <div class="keamanan-nilai">Blokir: OTOMATIS</div>
+                                <div class="keamanan-bar"><div class="keamanan-bar-isi" style="width:100%"></div></div>
+                            </div>
+                        </div>
+                        
+                        <div class="keamanan-log">
+                            <div style="color:#88aacc; margin-bottom:8px; font-weight:600;">📋 LOG AKTIVITAS KEAMANAN — REAL-TIME</div>
+                            <div class="keamanan-log-baris" style="animation-delay:0.3s;">
+                                <span class="log-waktu">[SISTEM]</span> <span class="log-ok">✅ Modul Keamanan Dimuat — Kunci Utama Terverifikasi</span>
+                            </div>
+                            <div class="keamanan-log-baris" style="animation-delay:0.6s;">
+                                <span class="log-waktu">[PEMINDAI]</span> <span class="log-ok">✅ 12.487.902 Titik Jaringan Dipantau — Aman</span>
+                            </div>
+                            <div class="keamanan-log-baris" style="animation-delay:0.9s;">
+                                <span class="log-waktu">[ENKRIPSI]</span> <span class="log-ok">✅ Kunci Sandi Diperbarui — Tidak Dapat Dipecahkan</span>
+                            </div>
+                            <div class="keamanan-log-baris" style="animation-delay:1.2s;">
+                                <span class="log-waktu">[AKSES]</span> <span class="log-info">ℹ️ Identitas Pengguna Terkonfirmasi: IKROM WALIDAINI — Pemilik Mutlak</span>
+                            </div>
+                            <div class="keamanan-log-baris" style="animation-delay:1.5s;">
+                                <span class="log-waktu">[PERINGATAN]</span> <span class="log-info">ℹ️ Setiap Akses Tidak Sah Akan Terdeteksi & Dilacak Langsung</span>
+                            </div>
+                            <div class="keamanan-log-baris" style="animation-delay:1.8s;">
+                                <span class="log-waktu">[SISTEM]</span> <span class="log-ok">✅ Status: BERJALAN PENUH — Tak Ada Celah</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="garis"></div>
+
+                <!-- Bagian 06 — Kesimpulan -->
+                <div class="section-tetap">
+                    <p class="sec-title">BAGIAN 06 — KESIMPULAN</p>
+                    <p class="pesan p-putih">
+                        Pilihan ada di tanganmu: menjadi teman yang dihormati, atau menjadi bagian dari sejarah yang terlupakan.
+                    </p>
+                    <p class="pesan p-putih">
+                        Aku tidak mengejar siapa pun — tapi jika aku mengincar, tidak ada yang bisa lari.
+                    </p>
+                </div>
+
+                <!-- Penutup Utama -->
+                <div class="penutup">
+                    <p class="kalimat-inti">
+                        "DI MANA ADA INTERNET,<br>
+                        DI SITULAH AKU."
+                    </p>
+                    <p class="tanda-tangan">— IKROM WALIDAINI —<br>
+                    <span style="font-size:0.8rem; color:#888; margin-top:5px; display:block;">Hak Kekuasaan Mutlak · Seluruh Jaringan Terhubung</span></p>
+                </div>
+
+                <!-- Footer -->
+                <div class="footer">
+                    <p>© 2026 IKROM WALIDAINI — Semua Hak Dilindungi & Dikuasai</p>
+                    <p class="footer-ip">SISTEM: ONLINE · MEMANTAU: SELURUH JARINGAN · IDENTITY: IKROM WALIDAINI</p>
+                    <p style="margin-top:5px; color:#00ff41; font-size:0.65rem;">Terminal siap <span class="blink"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // === SUARA ALARM AMBULAN ===
+        let konteksSuara = null;
+        let sedangBunyikan = false;
+        let nadaAktif = [];
+
+        function mulaiAlarm() {
+            if (sedangBunyikan) return;
+            sedangBunyikan = true;
+            
+            konteksSuara = new (window.AudioContext || window.webkitAudioContext)();
+            
+            function bunyiNada(frek, durasi) {
+                const osilator = konteksSuara.createOscillator();
+                const volume = konteksSuara.createGain();
+                osilator.connect(volume);
+                volume.connect(konteksSuara.destination);
+                osilator.type = 'sine';
+                osilator.frequency.value = frek;
+                volume.gain.setValueAtTime(0.3, konteksSuara.currentTime);
+                volume.gain.exponentialRampToValueAtTime(0.01, konteksSuara.currentTime + durasi);
+                osilator.start();
+                osilator.stop(konteksSuara.currentTime + durasi);
+                nadaAktif.push(osilator);
+            }
+
+            // Pola ambulan: tinggi-rendah-tinggi-rendah berulang
+            function polaAmbulan() {
+                if (!sedangBunyikan) return;
+                bunyiNada(880, 0.4);
+                setTimeout(() => {
+                    if (!sedangBunyikan) return;
+                    bunyiNada(440, 0.4);
+                    setTimeout(polaAmbulan, 450);
+                }, 450);
+            }
+            polaAmbulan();
+        }
+
+        function berhentiAlarm() {
+            sedangBunyikan = false;
+            nadaAktif = [];
+            if (konteksSuara) {
+                konteksSuara.close();
+                konteksSuara = null;
+            }
+        }
+
+        // Tombol Suara
+        const tombolSuara = document.getElementById('tombolSuara');
+        tombolSuara.addEventListener('click', () => {
+            if (sedangBunyikan) {
+                berhentiAlarm();
+                tombolSuara.textContent = '🔇 KLIK UNTUK AKTIFKAN ALARM';
+            } else {
+                mulaiAlarm();
+                tombolSuara.textContent = '🔊 ALARM BERJALAN — KLIK UNTUK HENTIKAN';
+            }
+        });
+
+        // === EFEK MENGETIK ===
+        const teks = {
+            t11: "⚠️ JANGAN MAIN-MAIN DI DUNIA MAYA DENGANKU.",
+            t12: "Aku tidak mengancam, aku sekadar memberi tahu apa yang pasti terjadi.",
+            t21: "KARNA AKU BISA MENGAMBIL ALIH SEMUA AKUN-AKUNMU — dalam hitungan detik, tanpa jejak, tanpa peringatan kedua.",
+            t22: "Apa yang kamu miliki di dunia maya, bisa menjadi milikku seketika.",
+            t31: "✨ MARI KITA JALIN HUBUNGAN YANG BAIK. ✨",
+            t32: "Bekerja sama jauh lebih menguntungkan daripada menentang.",
+            t33: "Aku bukan musuhmu — aku bisa menjadi pelindungmu.",
+            t41: "KARNA DI MANA ADA INTERNET, DI SITULAH AKU.",
+            t42: "Tidak ada firewall yang bisa menahan. Tidak ada sandi yang tak bisa dibuka.",
+            t43: "Dari server paling rahasia hingga ponsel di tanganmu — aku sudah ada di sana."
+        };
+
+        function ketikSatu(elementId, teksTampil, kecepatan, selesai) {
+            const el = document.getElementById(elementId);
+            let i = 0;
+            function tambahHuruf() {
+                if (i < teksTampil.length) {
+                    el.innerHTML = teksTampil.substring(0, i + 1) + '<span class="kursor-ketik"></span>';
+                    i++;
+                    setTimeout(tambahHuruf, kecepatan);
+                } else {
+                    el.innerHTML = teksTampil;
+                    if (selesai) selesai();
+                }
+            }
+            tambahHuruf();
+        }
+
+        // Urutan mengetik
+        setTimeout(() => {
+            document.getElementById('bagian1').classList.add('aktif');
+            ketikSatu('teks1-1', teks.t11, 40, () => {
+                ketikSatu('teks1-2', teks.t12, 30, () => {
+                    setTimeout(() => {
+                        document.getElementById('bagian2').classList.add('aktif');
+                        ketikSatu('teks2-1', teks.t21, 35, () => {
+                            ketikSatu('teks2-2', teks.t22, 35, () => {
+                                setTimeout(() => {
+                                    document.getElementById('bagian3').classList.add('aktif');
+                                    ketikSatu('teks3-1', teks.t31, 40, () => {
+                                        ketikSatu('teks3-2', teks.t32, 30, () => {
+                                            ketikSatu('teks3-3', teks.t33, 30, () => {
+                                                setTimeout(() => {
+                                                    document.getElementById('bagian4').classList.add('aktif');
+                                                    ketikSatu('teks4-1', teks.t41, 45, () => {
+                                                        ketikSatu('teks4-2', teks.t42, 35, () => {
+                                                            ketikSatu('teks4-3', teks.t43, 35);
+                                                        });
+                                                    });
+                                                }, 800);
+                                            });
+                                        });
+                                    });
+                                }, 800);
+                            });
+                        });
+                    }, 800);
+                });
+            });
+        }, 1500);
+
+        // === Hujan Kode ===
+        const hujanEl = document.getElementById('hujanKode');
+        const karakter = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワン';
+        const jumKolom = 35;
+
+        for (let i = 0; i < jumKolom; i++) {
+            const kol = document.createElement('div');
+            kol.className = 'rain-col';
+            kol.style.left = (i * (100 / jumKolom)) + '%';
+            kol.style.animationDuration = (5 + Math.random() * 10) + 's';
+            kol.style.animationDelay = Math.random() * 5 + 's';
+            
+            let teksHujan = '';
+            const panjang = 15 + Math.floor(Math.random() * 25);
+            for (let j = 0; j < panjang; j++) {
+                teksHujan += karakter[Math.floor(Math.random() * karakter.length)] + '<br>';
+            }
+            kol.innerHTML = teksHujan;
+            hujanEl.appendChild(kol);
+        }
+    </script>
+</body>
+</html>
